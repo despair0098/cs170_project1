@@ -18,3 +18,10 @@ elif (choice == 2):
 
 else:
     print("Invalid option.")
+    exit(0)
+
+print("Enter your choise of algorithm\n1. Uniform Cost Search.\n2. A* with the Misplaced Tile heuristic.\n3. A* with the Euclidean distance heuristic.")
+choice = int(input())
+if (choice > 3):
+    print("Invalid option.")
+    exit(0)

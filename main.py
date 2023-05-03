@@ -14,6 +14,17 @@ elif (choice == 2):
     puzzle = [int(item) for item in input("Enter the first row, use space or tabs between numbers\n").split()]
     puzzle += [int(item) for item in input("Enter the second row, use space or tabs between numbers\n").split()]
     puzzle += [int(item) for item in input("Enter the second row, use space or tabs between numbers\n").split()]
+    for x in puzzle:
+        check = x
+        for y in puzzle:
+            if (check==y):
+                print("Invalid puzzle.")
+                exit(0)
+                break
+        break
+    if (puzzle.len() != 9):
+        print("Invalid puzzle.")
+        exit(0)
     print(puzzle)   # temp debug
 
 else:

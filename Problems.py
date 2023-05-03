@@ -28,9 +28,3 @@ class Problem:
     def moveRight(self, index, curr):    
         
     
-            
-    
-        
-
-#def uniformCost(nodes, new_nodes):
-    #frontier = nodes

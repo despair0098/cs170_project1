@@ -2,8 +2,8 @@ class Node:
     def __init__(self, board):
         self.board = board
 
-    def get_state(self):
-        return self.state
+    def get_board(self):
+        return self.board
 
     def set_gn(self, gn):
         self.gn = gn

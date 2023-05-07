@@ -36,7 +36,7 @@ def main():
             exit(0)
 
     puzzle2 = []
-    puzzle2 = (puzzle)
+    puzzle2 = Problems.Problem(puzzle)
 
     print("Enter your choice of algorithm\n1. Uniform Cost Search.\n2. A* with the Misplaced Tile heuristic.\n3. A* with the Euclidean distance heuristic.")
     choice = int(input())
@@ -44,6 +44,9 @@ def main():
         print("Invalid option.")
         exit(0)
     elif (choice == 1):
-        uniformCostSearch(puzzle2)
+        start = time.time()
+        solution = Problems.uniformCostSearch(puzzle2)
+        end = time.time()
+        print("Time taken = " + end-start)
 
 main()

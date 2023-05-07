@@ -6,7 +6,7 @@ from node import Node
 class Problem:
     def __init__(self, init):
         self.init = init
-        self.goal = (Node)[1, 2, 3, 4, 5, 6, 7, 8, 0]
+        self.goal = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         self.node_count = 0
         self.attempts = set() # storing all of the ways that can be done by moving
         self.attempts.add(tuple(self.init))
@@ -146,7 +146,13 @@ def general_alg(problem):
         curSize = nodes.qsize()
         if curSize > maxQueue:
             maxQueue = curSize
+            
 def uniformCostSearch(puzzle):
+    currPuzzleState = Node(puzzle.get_Init())
+    currPuzzleState.set_fn(0)
+    currPuzzleState.set_gn(0)
+    currPuzzleState.set_hn(0)
+
 
     listOfPossibleOutcomesGn = []
     listOfPossibleOutcomesPuzzle = []
@@ -155,40 +161,41 @@ def uniformCostSearch(puzzle):
     #     x.set_hn(0)
     solveUniform = PriorityQueue()
     exploredUniform = PriorityQueue()
-    solveUniform.put(puzzle)
-    exploredUniform.put(puzzle)
+    solveUniform.put(currPuzzleState)
+    exploredUniform.put(currPuzzleState)
     while(solveUniform != ""):
         print("hello")
         newPuzzle = []
-        availableOperations = [self.moveUp, self.moveDown, self.moveLeft, self.moveRight]
-        #finding out where it can move
-        if(self.find_blank(puzzle) % 3 == 0):
-            #in this case, it can't go left
-            del availableOperations[2]
-        if(self.find_blank(puzzle) % 3 == 2):
-            #in this case, it can't go right
-            del availableOperations[3]
-        if(self.find_blank(puzzle) < 3):
-            #in this case, it can't go up
-            del availableOperations[0]
-        if(self.find_blank(puzzle) > 5):
-            #in this case, it can't go down
-            del availableOperations[1]
+        # availableOperations = [Problem.moveUp, Problem.moveDown, Problem.moveLeft, Problem.moveRight]
+        # #finding out where it can move
+        # if(Problem.find_blank(puzzle) % 3 == 0):
+        #     #in this case, it can't go left
+        #     del availableOperations[2]
+        # if(Problem.find_blank(puzzle) % 3 == 2):
+        #     #in this case, it can't go right
+        #     del availableOperations[3]
+        # if(Problem.find_blank(puzzle) < 3):
+        #     #in this case, it can't go up
+        #     del availableOperations[0]
+        # if(Problem.find_blank(puzzle) > 5):
+        #     #in this case, it can't go down
+        #     del availableOperations[1]
+        availableOperations = puzzle.operators(currPuzzleState)
         #check goal state
-        if solveUniform[0] == self.goal:
+        if solveUniform.queue[0] == puzzle.goal:
             return
         else:
             exploredUniform.put(solveUniform.get())
         #pushing every possible operation
         for x in availableOperations:
-            possibility = puzzle.availableOperations[x]
+            possibility = currPuzzleState.availableOperations[x]
             listOfPossibleOutcomesPuzzle += possibility
             #and this is where I compute its heuristic thingy
             gntemp = 0
             for y in possibility:
                 if(possibility.find_any_number(y.get_board()) != puzzle.goal.find_any_number(y.get_board())):
-                    gntemp += abs((puzzle.find_any_number(y.get_board()) % 3) - (puzzle.goal.find_any_number(y.get_board()) % 3))
-                    gntemp += abs((puzzle.find_any_number(y.get_board()) / 3) - (puzzle.goal.find_any_number(y.get_board()) / 3))
+                    gntemp += abs((currPuzzleState.find_any_number(y.get_board()) % 3) - (currPuzzleState.goal.find_any_number(y.get_board()) % 3))
+                    gntemp += abs((currPuzzleState.find_any_number(y.get_board()) / 3) - (currPuzzleState.goal.find_any_number(y.get_board()) / 3))
             listOfPossibleOutcomesGn += gntemp
         for z in listOfPossibleOutcomesGn:
             whichOneToPushFirst = listOfPossibleOutcomesGn.index(max(listOfPossibleOutcomesGn))

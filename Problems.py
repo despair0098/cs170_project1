@@ -157,8 +157,6 @@ def uniformCostSearch(puzzle):
     listOfPossibleOutcomesGn = []
     listOfPossibleOutcomesPuzzle = []
 
-    # for x in puzzle:
-    #     x.set_hn(0)
     solveUniform = PriorityQueue()
     exploredUniform = PriorityQueue()
     solveUniform.put(currPuzzleState)
@@ -166,38 +164,26 @@ def uniformCostSearch(puzzle):
     while(solveUniform != ""):
         print("hello")
         newPuzzle = []
-        # availableOperations = [Problem.moveUp, Problem.moveDown, Problem.moveLeft, Problem.moveRight]
-        # #finding out where it can move
-        # if(Problem.find_blank(puzzle) % 3 == 0):
-        #     #in this case, it can't go left
-        #     del availableOperations[2]
-        # if(Problem.find_blank(puzzle) % 3 == 2):
-        #     #in this case, it can't go right
-        #     del availableOperations[3]
-        # if(Problem.find_blank(puzzle) < 3):
-        #     #in this case, it can't go up
-        #     del availableOperations[0]
-        # if(Problem.find_blank(puzzle) > 5):
-        #     #in this case, it can't go down
-        #     del availableOperations[1]
         availableOperations = puzzle.operators(currPuzzleState)
+        #operators returns a list of NODES
         #check goal state
         if solveUniform.queue[0] == puzzle.goal:
             return
         else:
             exploredUniform.put(solveUniform.get())
         #pushing every possible operation
-        for x in availableOperations:
-            possibility = currPuzzleState.availableOperations[x]
-            listOfPossibleOutcomesPuzzle += possibility
-            #and this is where I compute its heuristic thingy
-            gntemp = 0
-            for y in possibility:
-                if(possibility.find_any_number(y.get_board()) != puzzle.goal.find_any_number(y.get_board())):
-                    gntemp += abs((currPuzzleState.find_any_number(y.get_board()) % 3) - (currPuzzleState.goal.find_any_number(y.get_board()) % 3))
-                    gntemp += abs((currPuzzleState.find_any_number(y.get_board()) / 3) - (currPuzzleState.goal.find_any_number(y.get_board()) / 3))
-            listOfPossibleOutcomesGn += gntemp
-        for z in listOfPossibleOutcomesGn:
-            whichOneToPushFirst = listOfPossibleOutcomesGn.index(max(listOfPossibleOutcomesGn))
-            newPuzzle = listOfPossibleOutcomesPuzzle[whichOneToPushFirst]
-            solveUniform.put(newPuzzle)
+        # for x in availableOperations:
+        #     possibility = x
+        #     listOfPossibleOutcomesPuzzle.append(possibility)
+        #     #and this is where I compute its heuristic thingy
+        #     gntemp = 0
+        #     for y in x.get_board():
+        #         if(x.find_any_number(y.get_board()) != puzzle.goal.find_any_number(y.get_board())):
+        #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) % 3) - (currPuzzleState.goal.find_any_number(y.get_board()) % 3))
+        #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) / 3) - (currPuzzleState.goal.find_any_number(y.get_board()) / 3))
+        #     listOfPossibleOutcomesGn += gntemp
+        # for z in listOfPossibleOutcomesGn:
+        #     whichOneToPushFirst = listOfPossibleOutcomesGn.index(max(listOfPossibleOutcomesGn))
+        #     newPuzzle = listOfPossibleOutcomesPuzzle[whichOneToPushFirst]
+        #     solveUniform.put(newPuzzle)
+        solveUniform.put(max(availableOperations.get_gn()))

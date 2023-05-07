@@ -22,5 +22,9 @@ class Node:
 
     def get_fn(self):
         return self.fn
+    
+    def __lt__(self, other):
+        return self.fn < other.fn
+
 
     

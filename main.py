@@ -1,4 +1,7 @@
 # Libraries
+import node
+import Problems
+import time
 
 print("Welcome to nceba003, zwang465, hmai015, bmott001 8 puzzle solver.")
 print("Type '1' to use a default puzzle, or '2' to enter your own puzzle.")
@@ -6,8 +9,14 @@ choice = int(input())
 
 if (choice == 1):
     print("You have chosen to use a default puzzle.")
-    puzzle = [1, 0, 3, 4, 2, 6, 7, 5, 8]
-    print(puzzle)   # temp debug
+    puzzle = [1, 2, 0, 4, 5, 3, 7, 8, 6]
+    temp = Problems.Problem(puzzle)
+    start = time.time()
+    node = Problems.general_alg(temp)
+    #temp2 = tuple(puzzle)
+    end = time.time()
+    #print(puzzle)   # temp debug
+    print("Time to finish: {}".format(end - start))
 
 elif (choice == 2):
     print("Enter your puzzle, use a zero to represent the blank.")

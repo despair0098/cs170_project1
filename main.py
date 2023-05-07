@@ -1,27 +1,32 @@
 # Libraries
-from node import *
-from Problems import *
+import node
+import Problems
+import time
 
 def main():
     print("Welcome to nceba003, zwang465, hmai015, bmott001 8 puzzle solver.")
     print("Type '1' to use a default puzzle, or '2' to enter your own puzzle.")
     choice = int(input())
 
-    if (choice == 1):
-        print("You have chosen to use a default puzzle.")
-        puzzle = [1, 0, 3, 4, 2, 6, 7, 5, 8]
-        print(puzzle)   # temp debug
-    elif (choice == 2):
-        print("Enter your puzzle, use a zero to represent the blank.")
-        puzzle = [int(item) for item in input("Enter the first row, use space or tabs between numbers\n").split()]
-        puzzle += [int(item) for item in input("Enter the second row, use space or tabs between numbers\n").split()]
-        puzzle += [int(item) for item in input("Enter the third row, use space or tabs between numbers\n").split()]
-        checkRepeat = len(set(puzzle))
-        if (checkRepeat != 9 or len(puzzle) != 9):
-            print("Invalid puzzle.")
-            exit(0)
-        for x in puzzle:
-            if (x > 8 or x < 0):
+if (choice == 1):
+    print("You have chosen to use a default puzzle.")
+    puzzle = [1, 2, 3, 4, 8, 0, 7, 6, 5]
+    temp = Problems.Problem(puzzle)
+    start = time.time()
+    node = Problems.general_alg(temp)
+    end = time.time()
+    #print(puzzle)   # temp debug
+    print("Time to finish: {}".format(end - start))
+
+elif (choice == 2):
+    print("Enter your puzzle, use a zero to represent the blank.")
+    puzzle = [int(item) for item in input("Enter the first row, use space or tabs between numbers\n").split()]
+    puzzle += [int(item) for item in input("Enter the second row, use space or tabs between numbers\n").split()]
+    puzzle += [int(item) for item in input("Enter the second row, use space or tabs between numbers\n").split()]
+    for x in puzzle:
+        check = x
+        for y in puzzle:
+            if (check==y):
                 print("Invalid puzzle.")
                 exit(0)
                 break

@@ -31,7 +31,7 @@ def main():
         exit(0)
 
     puzzle2 = []
-    puzzle2 = Node(puzzle)
+    puzzle2 = (puzzle)
 
     print("Enter your choice of algorithm\n1. Uniform Cost Search.\n2. A* with the Misplaced Tile heuristic.\n3. A* with the Euclidean distance heuristic.")
     choice = int(input())
@@ -39,6 +39,6 @@ def main():
         print("Invalid option.")
         exit(0)
     elif (choice == 1):
-        Problem.uniformCostSearch(puzzle2)
+        uniformCostSearch(puzzle2)
 
 main()

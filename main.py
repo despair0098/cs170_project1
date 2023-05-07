@@ -9,7 +9,7 @@ choice = int(input())
 
 if (choice == 1):
     print("You have chosen to use a default puzzle.")
-    puzzle = [1, 2, 3, 4, 8, 0, 7, 6, 5]
+    puzzle = [8, 7, 1, 6, 0, 2, 5, 4, 3]
     temp = Problems.Problem(puzzle)
     start = time.time()
     node = Problems.general_alg(temp)

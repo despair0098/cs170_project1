@@ -102,10 +102,11 @@ class Problem:
 def misplaced_calc(board):
     goal = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     misplaced = 0
-    for tile in board:
-        for goal_tile in goal:
-            if tile != goal_tile:
-                misplaced += 1
+    for tile, goal_tile in zip(board, goal):
+        if tile == 0:
+            continue
+        if tile != goal_tile:
+            misplaced += 1
     return misplaced
 
 def misplaced_tiles(nodes, new_nodes):
@@ -136,6 +137,7 @@ def general_alg(problem):
             print("Nodes expanded:{0}".format(str(problem.get_node_count())))
             print("Maximum num of nodes:{0}".format(str(maxQueue)))
             return node
+        print("The best state to expand with a g(n) = {gn} and h(n) = {hn} is ...".format(gn=node.get_gn(), hn=node.get_hn()))
         nodes = misplaced_tiles(nodes, problem.operators(node))
         curSize = nodes.qsize()
         if curSize > maxQueue:

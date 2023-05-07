@@ -57,3 +57,8 @@ class Problem:
     def uniformCostSearch(puzzle):
         for x in puzzle:
             x.set_hn(0)
+        solveUniform = PriorityQueue()
+        solveUniform.put(puzzle)
+        while(solveUniform != ""):
+            if(find_blank(puzzle) == 0):
+                moveLeft()

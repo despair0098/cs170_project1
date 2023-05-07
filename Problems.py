@@ -1,7 +1,7 @@
 from queue import PriorityQueue
 import copy
 from node import Node 
-from math import sqrt
+from math import sqrt, floor
 
 class Problem:
     def __init__(self, init):
@@ -121,17 +121,15 @@ def misplaced_tiles(nodes, new_nodes):
 
 def euclidean_calc(board):
     dist = 0
-    board2d = [board[:3], board[3:6], board[6:9]]
-    goal2d = [[1,2,3],[4,5,6],[7,8,0]]
-    for i in range(0, 3):
+    goal2d = [[1,2,3],[4,5,6],[7,8,0]]                                  # Turn both goal and board into 2d so that we can use rows and colums
+    board2d = [board[:3],board[3:6],board[6:9]]
+    for i in range(0, 3):                                               
         for j in range(0, 3):
-            if (board2d[i][j] != goal2d[i][j]):
-                for a in range(0, 3):
-                    for b in range(0, 3):
-                        if (board2d[i][j] == goal2d[a][b]):
+            if (board2d[i][j] != goal2d[i][j] and board2d[i][j] != 0):  # If current tile on board and goal are different, search for where tile should be
+                for a in range(0,3):
+                    for b in range(0,3):
+                        if (board2d[i][j] == goal2d[a][b]):             # If current tile found on board, calculate Euclidean distance
                             dist += sqrt((i - a)**2 + (j - b)**2)
-                        break
-                    break
     return dist
 
 def euclidean(nodes, new_nodes):

@@ -1,4 +1,7 @@
 # Libraries
+from node import *
+from Problems import *
+
 def main():
     print("Welcome to nceba003, zwang465, hmai015, bmott001 8 puzzle solver.")
     print("Type '1' to use a default puzzle, or '2' to enter your own puzzle.")
@@ -26,10 +29,16 @@ def main():
     else:
         print("Invalid option.")
         exit(0)
-    print("Enter your choise of algorithm\n1. Uniform Cost Search.\n2. A* with the Misplaced Tile heuristic.\n3. A* with the Euclidean distance heuristic.")
+
+    puzzle2 = []
+    puzzle2 = Node(puzzle)
+
+    print("Enter your choice of algorithm\n1. Uniform Cost Search.\n2. A* with the Misplaced Tile heuristic.\n3. A* with the Euclidean distance heuristic.")
     choice = int(input())
     if (choice > 3 or choice < 1):
         print("Invalid option.")
         exit(0)
+    elif (choice == 1):
+        Problem.uniformCostSearch(puzzle2)
 
 main()

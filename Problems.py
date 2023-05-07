@@ -19,12 +19,14 @@ class Problem:
     #def operators(self, input):
         
 
-    def moveUp(self, index, curr):
+    # def moveUp(self, index, curr):
         
-    def moveDown(self, index, curr):
+    # def moveDown(self, index, curr):
 
-    def moveLeft(self, index, curr):
+    # def moveLeft(self, index, curr):
 
-    def moveRight(self, index, curr):    
+    # def moveRight(self, index, curr):    
         
-    
+    def uniformCostSearch(puzzle):
+        for x in puzzle:
+            x.set_hn(0)

@@ -148,6 +148,14 @@ def euclidean(nodes, new_nodes):
         frontier.put(node)
     return frontier
 
+def uniform(nodes, new_nodes):
+    frontier = nodes
+    for node in new_nodes:
+        node.set_hn(0)
+        node.set_fn(node.get_gn())
+        frontier.put(node)
+    return frontier
+
 def general_alg(problem, algorithm):
     nodes = PriorityQueue()
     first = Node(problem.get_Init())
@@ -171,7 +179,9 @@ def general_alg(problem, algorithm):
             print("Maximum num of nodes:{0}".format(str(maxQueue)))
             return node
         print("The best state to expand with g(n) = {0} and h(n) = {1} is...".format(str(node.get_gn()),str(node.get_hn())))
-        if (algorithm == 2):
+        if (algorithm == 1):
+            nodes = uniform(nodes, problem.operators(node))
+        elif (algorithm == 2):
             nodes = misplaced_tiles(nodes, problem.operators(node))
         elif (algorithm == 3):
             nodes = euclidean(nodes, problem.operators(node))
@@ -179,43 +189,43 @@ def general_alg(problem, algorithm):
         if curSize > maxQueue:
             maxQueue = curSize
             
-def uniformCostSearch(puzzle):
-    currPuzzleState = Node(puzzle.get_Init())
-    currPuzzleState.set_fn(0)
-    currPuzzleState.set_gn(0)
-    currPuzzleState.set_hn(0)
+# def uniformCostSearch(puzzle):
+#     currPuzzleState = Node(puzzle.get_Init())
+#     currPuzzleState.set_fn(0)
+#     currPuzzleState.set_gn(0)
+#     currPuzzleState.set_hn(0)
 
 
-    listOfPossibleOutcomesGn = []
-    listOfPossibleOutcomesPuzzle = []
+#     listOfPossibleOutcomesGn = []
+#     listOfPossibleOutcomesPuzzle = []
 
-    solveUniform = PriorityQueue()
-    exploredUniform = PriorityQueue()
-    solveUniform.put(currPuzzleState)
-    exploredUniform.put(currPuzzleState)
-    while(solveUniform != ""):
-        print("hello")
-        newPuzzle = []
-        availableOperations = puzzle.operators(currPuzzleState)
-        #operators returns a list of NODES
-        #check goal state
-        if solveUniform.queue[0] == puzzle.goal:
-            return
-        else:
-            exploredUniform.put(solveUniform.get())
-        #pushing every possible operation
-        # for x in availableOperations:
-        #     possibility = x
-        #     listOfPossibleOutcomesPuzzle.append(possibility)
-        #     #and this is where I compute its heuristic thingy
-        #     gntemp = 0
-        #     for y in x.get_board():
-        #         if(x.find_any_number(y.get_board()) != puzzle.goal.find_any_number(y.get_board())):
-        #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) % 3) - (currPuzzleState.goal.find_any_number(y.get_board()) % 3))
-        #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) / 3) - (currPuzzleState.goal.find_any_number(y.get_board()) / 3))
-        #     listOfPossibleOutcomesGn += gntemp
-        # for z in listOfPossibleOutcomesGn:
-        #     whichOneToPushFirst = listOfPossibleOutcomesGn.index(max(listOfPossibleOutcomesGn))
-        #     newPuzzle = listOfPossibleOutcomesPuzzle[whichOneToPushFirst]
-        #     solveUniform.put(newPuzzle)
-        solveUniform.put(max(availableOperations.get_gn()))
+#     solveUniform = PriorityQueue()
+#     exploredUniform = PriorityQueue()
+#     solveUniform.put(currPuzzleState)
+#     exploredUniform.put(currPuzzleState)
+#     while(solveUniform != ""):
+#         print("hello")
+#         newPuzzle = []
+#         availableOperations = puzzle.operators(currPuzzleState)
+#         #operators returns a list of NODES
+#         #check goal state
+#         if solveUniform.queue[0] == puzzle.goal:
+#             return
+#         else:
+#             exploredUniform.put(solveUniform.get())
+#         #pushing every possible operation
+#         # for x in availableOperations:
+#         #     possibility = x
+#         #     listOfPossibleOutcomesPuzzle.append(possibility)
+#         #     #and this is where I compute its heuristic thingy
+#         #     gntemp = 0
+#         #     for y in x.get_board():
+#         #         if(x.find_any_number(y.get_board()) != puzzle.goal.find_any_number(y.get_board())):
+#         #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) % 3) - (currPuzzleState.goal.find_any_number(y.get_board()) % 3))
+#         #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) / 3) - (currPuzzleState.goal.find_any_number(y.get_board()) / 3))
+#         #     listOfPossibleOutcomesGn += gntemp
+#         # for z in listOfPossibleOutcomesGn:
+#         #     whichOneToPushFirst = listOfPossibleOutcomesGn.index(max(listOfPossibleOutcomesGn))
+#         #     newPuzzle = listOfPossibleOutcomesPuzzle[whichOneToPushFirst]
+#         #     solveUniform.put(newPuzzle)
+#         solveUniform.put(max(availableOperations.get_gn()))

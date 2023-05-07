@@ -52,14 +52,14 @@ class Problem:
                 node_list.append(down_node)
 
         # Moving right
-        if zero_index % 3 > 0:
+        if zero_index % 3 < 2:
             right_node = Node(self.moveRight(zero_index, curr))
             right_node.set_gn(input.get_gn()+1)
             if self.check_attempts(right_node.get_board()):
                 node_list.append(right_node)
 
         # Moving left
-        if zero_index % 3 < 2:
+        if zero_index % 3 > 0:
             left_node = Node(self.moveLeft(zero_index, curr))
             left_node.set_gn(input.get_gn()+1)
             if self.check_attempts(left_node.get_board()):

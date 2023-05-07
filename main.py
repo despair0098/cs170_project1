@@ -9,11 +9,10 @@ choice = int(input())
 
 if (choice == 1):
     print("You have chosen to use a default puzzle.")
-    puzzle = [1, 2, 0, 4, 5, 3, 7, 8, 6]
+    puzzle = [1, 2, 3, 4, 8, 0, 7, 6, 5]
     temp = Problems.Problem(puzzle)
     start = time.time()
     node = Problems.general_alg(temp)
-    #temp2 = tuple(puzzle)
     end = time.time()
     #print(puzzle)   # temp debug
     print("Time to finish: {}".format(end - start))

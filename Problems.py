@@ -187,6 +187,7 @@ def general_alg(problem, algorithm):
             print("Goal!!!")
             print("Nodes expanded:{0}".format(str(problem.get_node_count())))
             print("Maximum num of nodes:{0}".format(str(maxQueue)))
+            print("Depth of goal node was:{0}".format(str(node.get_gn())))
             return node
         if (algorithm == 1):
             nodes = uniform(nodes, problem.operators(node))

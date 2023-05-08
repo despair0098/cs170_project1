@@ -171,6 +171,9 @@ def general_alg(problem, algorithm):
     maxQueue = nodes.qsize()
     while(1):
         if nodes.empty():
+            print("Failure!!!")
+            print("Nodes expanded:{0}".format(str(problem.get_node_count())))
+            print("Maximum num of nodes:{0}".format(str(maxQueue)))
             return "failure"
         node = nodes.get()
         if problem.goal_test(node.get_board()):

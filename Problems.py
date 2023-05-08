@@ -1,7 +1,8 @@
 from queue import PriorityQueue
+from node import *
 import copy
 from node import Node 
-from math import sqrt
+from math import sqrt, floor
 
 class Problem:
     def __init__(self, init):
@@ -22,6 +23,11 @@ class Problem:
     def find_blank(self, curr):
         for index, value in enumerate(curr):
             if value == 0:
+                return index
+            
+    def find_any_number(self, curr, number):
+        for index, value in enumerate(curr):
+            if value == number:
                 return index
             
     def check_attempts(self, board):
@@ -121,17 +127,15 @@ def misplaced_tiles(nodes, new_nodes):
 
 def euclidean_calc(board):
     dist = 0
-    board2d = [board[:3], board[3:6], board[6:9]]
-    goal2d = [[1,2,3],[4,5,6],[7,8,0]]
-    for i in range(0, 3):
+    goal2d = [[1,2,3],[4,5,6],[7,8,0]]                                  # Turn both goal and board into 2d so that we can use rows and colums
+    board2d = [board[:3],board[3:6],board[6:9]]
+    for i in range(0, 3):                                               
         for j in range(0, 3):
-            if (board2d[i][j] != goal2d[i][j]):
-                for a in range(0, 3):
-                    for b in range(0, 3):
-                        if (board2d[i][j] == goal2d[a][b]):
+            if (board2d[i][j] != goal2d[i][j] and board2d[i][j] != 0):  # If current tile on board and goal are different, search for where tile should be
+                for a in range(0,3):
+                    for b in range(0,3):
+                        if (board2d[i][j] == goal2d[a][b]):             # If current tile found on board, calculate Euclidean distance
                             dist += sqrt((i - a)**2 + (j - b)**2)
-                        break
-                    break
     return dist
 
 def euclidean(nodes, new_nodes):
@@ -143,6 +147,19 @@ def euclidean(nodes, new_nodes):
         node.set_fn(currentGn + euc)
         frontier.put(node)
     return frontier
+
+def uniform(nodes, new_nodes):
+    frontier = nodes
+    for node in new_nodes:
+        node.set_hn(0)
+        node.set_fn(node.get_gn())
+        frontier.put(node)
+    return frontier
+
+def printNode(curr):
+    print(curr[0:3])
+    print(curr[3:6])
+    print(curr[6:9])
 
 def general_alg(problem, algorithm):
     nodes = PriorityQueue()
@@ -159,18 +176,65 @@ def general_alg(problem, algorithm):
     maxQueue = nodes.qsize()
     while(1):
         if nodes.empty():
+            print("Failure!!!")
+            print("Nodes expanded:{0}".format(str(problem.get_node_count())))
+            print("Maximum num of nodes:{0}".format(str(maxQueue)))
             return "failure"
         node = nodes.get()
+        print("The best state to expand with g(n) = {0} and h(n) = {1} is...".format(str(node.get_gn()),str(node.get_hn())))
+        printNode(node.get_board())
         if problem.goal_test(node.get_board()):
             print("Goal!!!")
             print("Nodes expanded:{0}".format(str(problem.get_node_count())))
             print("Maximum num of nodes:{0}".format(str(maxQueue)))
             return node
-        print("The best state to expand with g(n) = {0} and h(n) = {1} is...".format(str(node.get_gn()),str(node.get_hn())))
-        if (algorithm == 2):
+        if (algorithm == 1):
+            nodes = uniform(nodes, problem.operators(node))
+        elif (algorithm == 2):
             nodes = misplaced_tiles(nodes, problem.operators(node))
         elif (algorithm == 3):
             nodes = euclidean(nodes, problem.operators(node))
         curSize = nodes.qsize()
         if curSize > maxQueue:
             maxQueue = curSize
+            
+# def uniformCostSearch(puzzle):
+#     currPuzzleState = Node(puzzle.get_Init())
+#     currPuzzleState.set_fn(0)
+#     currPuzzleState.set_gn(0)
+#     currPuzzleState.set_hn(0)
+
+
+#     listOfPossibleOutcomesGn = []
+#     listOfPossibleOutcomesPuzzle = []
+
+#     solveUniform = PriorityQueue()
+#     exploredUniform = PriorityQueue()
+#     solveUniform.put(currPuzzleState)
+#     exploredUniform.put(currPuzzleState)
+#     while(solveUniform != ""):
+#         print("hello")
+#         newPuzzle = []
+#         availableOperations = puzzle.operators(currPuzzleState)
+#         #operators returns a list of NODES
+#         #check goal state
+#         if solveUniform.queue[0] == puzzle.goal:
+#             return
+#         else:
+#             exploredUniform.put(solveUniform.get())
+#         #pushing every possible operation
+#         # for x in availableOperations:
+#         #     possibility = x
+#         #     listOfPossibleOutcomesPuzzle.append(possibility)
+#         #     #and this is where I compute its heuristic thingy
+#         #     gntemp = 0
+#         #     for y in x.get_board():
+#         #         if(x.find_any_number(y.get_board()) != puzzle.goal.find_any_number(y.get_board())):
+#         #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) % 3) - (currPuzzleState.goal.find_any_number(y.get_board()) % 3))
+#         #             gntemp += abs((currPuzzleState.find_any_number(y.get_board()) / 3) - (currPuzzleState.goal.find_any_number(y.get_board()) / 3))
+#         #     listOfPossibleOutcomesGn += gntemp
+#         # for z in listOfPossibleOutcomesGn:
+#         #     whichOneToPushFirst = listOfPossibleOutcomesGn.index(max(listOfPossibleOutcomesGn))
+#         #     newPuzzle = listOfPossibleOutcomesPuzzle[whichOneToPushFirst]
+#         #     solveUniform.put(newPuzzle)
+#         solveUniform.put(max(availableOperations.get_gn()))

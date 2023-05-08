@@ -156,6 +156,11 @@ def uniform(nodes, new_nodes):
         frontier.put(node)
     return frontier
 
+def printNode(curr):
+    print(curr[0:3])
+    print(curr[3:6])
+    print(curr[6:9])
+
 def general_alg(problem, algorithm):
     nodes = PriorityQueue()
     first = Node(problem.get_Init())
@@ -173,12 +178,13 @@ def general_alg(problem, algorithm):
         if nodes.empty():
             return "failure"
         node = nodes.get()
+        print("The best state to expand with g(n) = {0} and h(n) = {1} is...".format(str(node.get_gn()),str(node.get_hn())))
+        printNode(node.get_board())
         if problem.goal_test(node.get_board()):
             print("Goal!!!")
             print("Nodes expanded:{0}".format(str(problem.get_node_count())))
             print("Maximum num of nodes:{0}".format(str(maxQueue)))
             return node
-        print("The best state to expand with g(n) = {0} and h(n) = {1} is...".format(str(node.get_gn()),str(node.get_hn())))
         if (algorithm == 1):
             nodes = uniform(nodes, problem.operators(node))
         elif (algorithm == 2):

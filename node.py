@@ -22,8 +22,8 @@ class Node:
 
     def get_fn(self):
         return self.fn
-    # this function needs to be typed because of this error: https://www.appsloveworld.com/coding/python3x/283/typeerror-not-supported-between-instances-of-node-and-node
     
+    # this function needs to be typed because of this error: https://www.appsloveworld.com/coding/python3x/283/typeerror-not-supported-between-instances-of-node-and-node
     def __lt__(self, other):
         return self.fn < other.fn
 

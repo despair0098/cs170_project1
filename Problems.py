@@ -67,7 +67,7 @@ class Problem:
         
         return node_list
         
-    # from: https://docs.python.org/3/library/copy.html
+    # from: https://docs.python.org/3/library/copy.html for using deepcopy function. 
     def moveUp(self, index, curr):# the index should be the one for zero
         up = copy.deepcopy(curr)
         temp = up[index]
@@ -99,6 +99,7 @@ class Problem:
     def get_Init(self):
         return self.init
     
+# From: https://www.geeksforgeeks.org/python-iterate-multiple-lists-simultaneously/ for the loop
 def misplaced_calc(board):
     goal = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     misplaced = 0
